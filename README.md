@@ -65,7 +65,7 @@ To validate webhook just call `webhook_valid?`. First argument is params hash fr
 		if Transferuj.webhook_valid?(params, request.env["HTTP_X_REAL_IP"])
 			#process transaction
 			respond_to do |format|
-		    format.html { render :text => "TRUE" }
+		  	format.html { render :text => "TRUE" }
 		  end
 		else
 			render :status => 404
