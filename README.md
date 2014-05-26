@@ -39,7 +39,7 @@ First read the documentation which you can find [here](https://secure.transferuj
 
 If you want to create url to redirect user to payment page just call `pay_url` with parameters. [Here](https://secure.transferuj.pl/partner/pliki/dokumentacja.pdf) you can find list of params. Skip `id` attribute.  
 
-```
+```ruby
 	def pay
 		url = Transferuj.pay_url(
 			{
@@ -60,7 +60,7 @@ If you want to create url to redirect user to payment page just call `pay_url` w
 
 To validate webhook just call `webhook_valid?`. First argument is params hash from POST request, second is IP address of host sending request.
 
-```
+```ruby
 	def webhook
 		if Transferuj.webhook_valid?(params, request.env["HTTP_X_REAL_IP"])
 			#process transaction
