@@ -23,8 +23,8 @@ First you have to configure gem using your details form transferuj.pl panel. You
 
 ```ruby
 Rails.application.config.before_initialize do
-  Transferuj.id = 14090
-  Transferuj.security_code = 'EAoycw18x2tVo4OU'
+	Transferuj.id = 14090
+	Transferuj.security_code = 'EAoycw18x2tVo4OU'
 end
 ```
 
@@ -40,20 +40,20 @@ First read the documentation which you can find [here](https://secure.transferuj
 If you want to create url to redirect user to payment page just call `pay_url` with parameters. [Here](https://secure.transferuj.pl/partner/pliki/dokumentacja.pdf) you can find list of params. Skip `id` attribute.  
 
 ```ruby
-	def pay
-		url = Transferuj.pay_url(
-			{
-				:kwota => 1,
-				:opis => 'Opis transakcji',
-				:crc => '124',
-				:online => 1,
-				:wyn_url => url_for( controller: 'transactions', action: 'webhook', host: 'http://myapp.com'),
-				:pow_url => url_for( controller: 'site', action: 'index', host: 'http://myapp.com'),
-				:pow_url_blad => url_for( controller: 'site', action: 'index', host: 'http://myapp.com'),
-			}
-		)
-		redirect_to url
-	end
+def pay
+	url = Transferuj.pay_url(
+		{
+			:kwota => 1,
+			:opis => 'Opis transakcji',
+			:crc => '124',
+			:online => 1,
+			:wyn_url => url_for( controller: 'transactions', action: 'webhook', host: 'http://myapp.com'),
+			:pow_url => url_for( controller: 'site', action: 'index', host: 'http://myapp.com'),
+			:pow_url_blad => url_for( controller: 'site', action: 'index', host: 'http://myapp.com'),
+		}
+	)
+	redirect_to url
+end
 ```
 
 #### Validate webhook
@@ -61,16 +61,16 @@ If you want to create url to redirect user to payment page just call `pay_url` w
 To validate webhook just call `webhook_valid?`. First argument is params hash from POST request, second is IP address of host sending request.
 
 ```ruby
-	def webhook
-		if Transferuj.webhook_valid?(params, request.env["HTTP_X_REAL_IP"])
-			#process transaction
-			respond_to do |format|
-		  	format.html { render :text => "TRUE" }
-		  end
-		else
-			render :status => 404
+def webhook
+	if Transferuj.webhook_valid?(params, request.env["HTTP_X_REAL_IP"])
+		#process transaction
+		respond_to do |format|
+			format.html { render :text => "TRUE" }
 		end
+	else
+		render :status => 404
 	end
+end
 ```
 
 ## Licence
