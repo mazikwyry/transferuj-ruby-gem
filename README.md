@@ -73,6 +73,14 @@ def webhook
 end
 ```
 
+## Important!!!
+
+* Enable Test Mode in your transferuj.pl panel.
+* You can send test webhooks form your transferuj.pl panel
+
 ## Licence
 
 Copyright (c) 2014 Adam Mazur, released under the MIT license
+
+
+*Feel free to contact me if you need help: mazik.wyry [**a*t**] gmail.com*
