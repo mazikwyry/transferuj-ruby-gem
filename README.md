@@ -83,4 +83,4 @@ end
 Copyright (c) 2014 Adam Mazur, released under the MIT license
 
 
-*Feel free to contact me if you need help: mazik.wyry [**a*t**] gmail.com*
+*Feel free to contact me if you need help: mazik.wyry [--a-t--] gmail.com*
