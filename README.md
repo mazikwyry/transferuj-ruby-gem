@@ -24,7 +24,7 @@ First you have to configure gem using your details form transferuj.pl panel. You
 ```ruby
 Rails.application.config.before_initialize do
   Transferuj.id = 14090
-	Transferuj.security_code = 'EAoycw18x2tVo4OU'
+  Transferuj.security_code = 'EAoycw18x2tVo4OU'
 end
 ```
 
@@ -43,13 +43,13 @@ If you want to create url to redirect user to payment page just call `pay_url` w
 	def pay
 		url = Transferuj.pay_url(
 			{
-					:kwota => 1,
-					:opis => 'Opis transakcji',
-					:crc => '124',
-					:online => 1,
-					:wyn_url => url_for( controller: 'transactions', action: 'webhook', host: 'http://myapp.com'),
-					:pow_url => url_for( controller: 'site', action: 'index', host: 'http://myapp.com'),
-					:pow_url_blad => url_for( controller: 'site', action: 'index', host: 'http://myapp.com'),
+				:kwota => 1,
+				:opis => 'Opis transakcji',
+				:crc => '124',
+				:online => 1,
+				:wyn_url => url_for( controller: 'transactions', action: 'webhook', host: 'http://myapp.com'),
+				:pow_url => url_for( controller: 'site', action: 'index', host: 'http://myapp.com'),
+				:pow_url_blad => url_for( controller: 'site', action: 'index', host: 'http://myapp.com'),
 			}
 		)
 		redirect_to url
