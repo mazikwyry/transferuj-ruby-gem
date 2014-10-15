@@ -34,7 +34,6 @@ module Transferuj
 	def self.webhook_valid?(transaction, ip)
 		self.sanity_check!
 		md5sum = Digest::MD5.hexdigest(self.id.to_s+transaction[:tr_id].to_s+transaction[:tr_amount].to_s+transaction[:tr_crc].to_s+self.security_code.to_s)
-		binding.pry
     ip == '195.149.229.109' && transaction[:md5sum] == md5sum
 	end
 
