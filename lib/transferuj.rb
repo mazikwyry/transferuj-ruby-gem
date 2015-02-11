@@ -26,8 +26,8 @@ module Transferuj
 	def self.pay_url(params = {})
 		self.sanity_check!
 		md5sum = Digest::MD5.hexdigest(self.id.to_s+params[:kwota].to_s+params[:crc].to_s+self.security_code.to_s)
-		params.merge!({:id => self.id, :md5sum => md5sum})
-		URI::HTTP.build(:host => "secure.transferuj.pl", :query => params.to_query).to_s
+		params.merge!({id: self.id, md5sum: md5sum})
+		URI::HTTPS.build(host: "secure.transferuj.pl", query: params.to_query).to_s
 	end
 
   # Checks MD5 checksum and IP of request
@@ -47,4 +47,47 @@ module Transferuj
     end
   end
 
+  class Client
+    attr_accessor :id, :security_code
+
+    def initialize(id, security_code)
+      @id, @security_code = id, security_code
+    end
+
+    # Creates URL for redirection to pay page
+    def pay_url(params = {})
+      sanity_check!
+      md5sum = Digest::MD5.hexdigest([
+                                        id,
+                                        params[:kwota],
+                                        params[:crc],
+                                        security_code
+                                      ].join)
+      params.merge!({id: id, md5sum: md5sum})
+      URI::HTTPS.build(host: "secure.transferuj.pl", query: params.to_query).to_s
+    end
+
+    # Checks MD5 checksum and IP of request
+    def webhook_valid?(transaction, ip)
+      sanity_check!
+      md5sum = Digest::MD5.hexdigest([
+                                        id,
+                                        transaction[:tr_id],
+                                        transaction[:tr_amount],
+                                        transaction[:tr_crc],
+                                        security_code
+                                      ].join)
+      ip == '195.149.229.109' && transaction[:md5sum] == md5sum
+    end
+
+    def configured?
+      id.present? && security_code.present?
+    end
+
+    def sanity_check!
+      unless configured?
+        raise Exception.new("Transferuj Gem not properly configured. See README to get help how to do it.")
+      end
+    end
+  end
 end
